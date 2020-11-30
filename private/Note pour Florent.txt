@@ -1,0 +1,16 @@
+I. SQL
+  Faire une moyenne : AVG (Nombre de commentaire par vetement)
+  Comment compter: COUNT(Statiques)
+  
+II. JAVASCRIPT
+   jquery (bibliothèque qui simplifie la vie)
+   
+  
+III. ENGLISH
+  Issue = Problèmes
+  Commit = Commettre 
+
+IV. DEVELOPPEMENT
+  FRONT-END : conception de l’interface graphique utilisateur
+   
+
