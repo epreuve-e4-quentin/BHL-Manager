@@ -9,5 +9,8 @@ II. JAVASCRIPT
 III. ENGLISH
   Issue = Problèmes
   Commit = Commettre 
+
+IV. DEVELOPPEMENT
+  FRONT-END : conception de l’interface graphique utilisateur
    
 
