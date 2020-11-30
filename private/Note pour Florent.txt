@@ -5,4 +5,9 @@ I. SQL
 II. JAVASCRIPT
    jquery (bibliothèque qui simplifie la vie)
    
+  
+III. ENGLISH
+  Issue = Problèmes
+  Commit = Commettre 
+   
 
