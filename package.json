@@ -1,0 +1,22 @@
+{
+  "name": "BHL-Manager",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/quentinhoareau/BHL-Manager.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/quentinhoareau/BHL-Manager/issues"
+  },
+  "homepage": "https://github.com/quentinhoareau/BHL-Manager#readme",
+  "dependencies": {},
+  "devDependencies": {},
+  "description": ""
+}
