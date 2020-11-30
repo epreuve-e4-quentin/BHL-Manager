@@ -1,1 +1,8 @@
-test
+I. SQL
+  Faire une moyenne : AVG (Nombre de commentaire par vetement)
+  Comment compter: COUNT(Statiques)
+  
+II. JAVASCRIPT
+   jquery (bibliothèque qui simplifie la vie)
+   
+
