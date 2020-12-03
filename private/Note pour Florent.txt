@@ -4,6 +4,10 @@ I. SQL
   
 II. JAVASCRIPT
    jquery (bibliothèque qui simplifie la vie)
+   .p      = class
+   #p      = id
+   p       = balise
+   
    
   
 III. ENGLISH
