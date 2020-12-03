@@ -12,5 +12,8 @@ III. ENGLISH
 
 IV. DEVELOPPEMENT
   FRONT-END : conception de l’interface graphique utilisateur
+ 
+V. LES DIFFERENCES ENTRE JSON ET JAVASCRIPT
+  json un fichier qui contient un tableau qui contient lui-meme des données.
    
 
