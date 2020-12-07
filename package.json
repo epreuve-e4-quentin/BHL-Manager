@@ -1,9 +1,9 @@
 {
   "name": "BHL-Manager",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "electron ."
   },
   "repository": {
     "type": "git",
@@ -17,6 +17,8 @@
   },
   "homepage": "https://github.com/quentinhoareau/BHL-Manager#readme",
   "dependencies": {},
-  "devDependencies": {},
+  "devDependencies": {
+    "electron": "^11.0.3"
+  },
   "description": ""
 }
