@@ -3,10 +3,16 @@ I. SQL
   Comment compter: COUNT(Statiques)
   
 II. JAVASCRIPT
-   jquery (bibliothèque qui simplifie la vie)
+   A.jquery (bibliothèque qui simplifie la vie)
+   
+   B.
    .p      = class
    #p      = id
    p       = balise
+   
+   C.DATATABLE premet d'organiser, trier, rechercher, paginer les données dans un tableau ( ne marche pas sans jquery et javascript)
+   
+   
    
    
   
