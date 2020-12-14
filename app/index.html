@@ -6,10 +6,14 @@
 </head>
 <body style="background: white;">
     <h1>Hello World!</h1>
-    <p>
-        We are using node <script>document.write(process.versions.node)</script>,
-        Chrome <script>document.write(process.versions.chrome)</script>,
-        and Electron <script>document.write(process.versions.electron)</script>.
-    </p>
+   <script>
+
+    const controller = require('./controller/ClientController.js');
+    var clientController = new controller();
+
+  
+
+   </script>
+
 </body>
 </html>
