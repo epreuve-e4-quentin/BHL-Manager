@@ -14,7 +14,6 @@ II. JAVASCRIPT
    
    
    
-   
   
 III. ENGLISH
   Issue = Problèmes
@@ -25,5 +24,9 @@ IV. DEVELOPPEMENT
  
 V. LES DIFFERENCES ENTRE JSON ET JAVASCRIPT
   json un fichier qui contient un tableau qui contient lui-meme des données.
+  
+  
+VI. GLOBAL
+  Convention d'une nomination de class commence toujours par un majuscule.
    
 
