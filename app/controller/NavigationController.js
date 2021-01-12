@@ -1,0 +1,38 @@
+
+
+class NavigationController{
+   constructor(){
+    
+
+      this.View = new View("Navigation");
+      this.View.setFile("view/navigation.html");
+
+      //Ajout de la vue au body du html
+      $(this.View.element).load(this.View.file);
+      $("body").append(this.View.element); 
+
+      //Les fonctionalités de la vue
+      this.changeView();
+
+      
+
+   }
+
+   changeView(){
+      const electron = require('electron');
+      const {ipcRenderer} = electron;
+      //Navigation évènement;
+      $(document).on("click", "#mainNav ul li", function() {
+         alert($(this).attr("data-ctrl"));
+         ipcRenderer.send('ctrl:add', $(this).attr("data-ctrl"));
+      });
+
+   }
+
+
+
+}
+
+
+
+module.exports = NavigationController

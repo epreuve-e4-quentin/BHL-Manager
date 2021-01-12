@@ -1,41 +1,104 @@
-/*faire appel aux modules d'electron*/ 
-const electron = require('electron');         
+const { Console } = require('console');
+const electron = require('electron');
 const path = require('path');
 const url = require('url');
 
-
-
-const { app, BrowserWindow, BrowserView, ipcMain } = require('electron');
+// Les constante
+const {app, BrowserWindow, BrowserView , ipcMain} = electron;
 
 let mainWindow;
 let mainNav;
 let mainContent;
 
-//Lorque l'app est prete
-
+// Lorsque l'app est prête
 app.on('ready', function(){
-  const mainWindow = new BrowserWindow({
-    width: 800,                                             //Créer la fenetre 
-    height: 600,
+  // Création d'une nouvelle fenêtre
+  mainWindow = new BrowserWindow({
+    width: 1200,
+    height:800,
+    webPreferences: {
+      nodeIntegration: true //Activation des dépendence (jquery/electron)
+    }
+  });
+
+ 
+  // Quit app when closed
+  mainWindow.on('closed', function(){
+    app.quit();
+  });
+
+
+  //-------------Navigation------------------
+  mainNav = new BrowserView({
     webPreferences: {
       nodeIntegration: true
     }
-  })
-
-  mainWindow.loadURL(url.format({
+  });
+  mainWindow.addBrowserView(mainNav) ;
+  console.log(mainWindow.getBrowserView());
+  mainNav.setBounds({ x: 0, y: 0, width: 300, height: 800 }) ;
+  mainNav.webContents.loadURL(url.format({
     pathname: path.join(__dirname, 'index.html'),
     protocol: 'file:',
     slashes:true
   }));
+
+  //mainNav.webContents.openDevTools({mode:'undocked'}) ;
+
+  mainNav.webContents.on('did-finish-load', () => {
+    mainNav.webContents.send('ctrl:add', "Navigation");
+  })
+  //----------------------------------------
   
-  //Navigation
-  const nav = new BrowserView(); //Instenciation de la vue du navigateur
-  mainWindow.addBrowserView(nav); //Ajout de la vue à la fenetere principale
-  nav.setBounds({ x: 0, y: 0, width: 300, height: 300}); //Ajout de la position de la vue
-  nav.webContents.loadURL('https://electronjs.org'); //Implémentation de la page sur la vue
-  
-  const content = new BrowserView();
-  mainWindow.addBrowserView(content);
-  content.setBounds({ x: 301, y: 0, width : 800, height : 500 });
-  content.webContents.loadURL('https://google.fr');
-})  ;
+
+
+
+  //-------------Contenu principal------------------
+  mainContent = new BrowserView({
+    webPreferences: {
+      nodeIntegration: true
+    }
+  });
+  mainWindow.addBrowserView(mainContent) ;
+  mainContent.setBounds({ x: 301, y: 0, width: 500, height: 800 }) ;
+  mainContent.webContents.loadURL(url.format({
+    pathname: path.join(__dirname, 'index.html'),
+    protocol: 'file:',
+    slashes:true,
+    
+  }));
+
+  mainNav.webContents.openDevTools({mode:'undocked'}) ;
+
+  mainContent.webContents.on('did-finish-load', () => {
+    mainContent.webContents.send('ctrl:add', "Home");
+  })
+
+ 
+ //-----------------------------------------------
+
+ 
+ipcMain.on('ctrl:add', function(e, ctrl){
+
+  // mainContent.webContents.loadURL(url.format({
+  //   pathname: path.join(__dirname, 'index.html'),
+  //   protocol: 'file:',
+  //   slashes:true,
+  // }));
+
+  mainContent.webContents.session.clearCache(function(){console.log('cleared all cookies ');});
+
+  mainContent.webContents.on('did-finish-load', () => {
+    console.log(ctrl);
+    mainContent.webContents.send('ctrl:add', ctrl);
+  });
+
+  console.log(ctrl);
+
+
+});
+
+});
+
+
+
