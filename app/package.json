@@ -1,7 +1,5 @@
-
-
 {
- "name": "BHL-Manager",
+  "name": "BHL-Manager",
   "version": "1.0.0",
   "main": "main.js",
   "scripts": {
@@ -18,7 +16,9 @@
     "url": "https://github.com/quentinhoareau/BHL-Manager/issues"
   },
   "homepage": "https://github.com/quentinhoareau/BHL-Manager#readme",
-  "dependencies": {},
+  "dependencies": {
+    "jquery": "^3.5.1"
+  },
   "devDependencies": {
     "electron": "^11.0.3"
   },
