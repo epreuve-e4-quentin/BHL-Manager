@@ -1,29 +1,29 @@
 
 
-class NavigationController{
-   constructor(){
-    
+class NavigationController {
+   constructor() {
+
 
       this.View = new View("Navigation");
       this.View.setFile("view/navigation.html");
 
       //Ajout de la vue au body du html
       $(this.View.element).load(this.View.file);
-      $("body").append(this.View.element); 
+      $("body").append(this.View.element);
 
       //Les fonctionalités de la vue
       this.changeView();
 
-      
+
 
    }
 
-   changeView(){
+   changeView() {
       const electron = require('electron');
-      const {ipcRenderer} = electron;
+      const { ipcRenderer } = electron;
       //Navigation évènement;
-      $(document).on("click", "#mainNav ul li", function() {
-         alert($(this).attr("data-ctrl"));
+      $(document).on("click", "#mainNav ul li", function () {
+         //alert($(this).attr("data-ctrl"));
          ipcRenderer.send('ctrl:add', $(this).attr("data-ctrl"));
       });
 

@@ -1,29 +1,31 @@
-
 <!DOCTYPE html>
 <html>
+
 <head>
   <title>BHL Manager</title>
-  <script>window.$ = window.jQuery = require('jquery');</script>  
+  <script>window.$ = window.jQuery = require('jquery');</script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
 </head>
+
 <body>
 
   <script>
 
     const electron = require('electron');
-    const {ipcRenderer} = electron;
+    const { ipcRenderer } = electron;
     const View = require('./view/View.js');
-    
-    ipcRenderer.on('ctrl:add', function(e, ctrl){
-        alert("./controller/"+ctrl+"Controller.js");
-        ctrlFile = "./controller/"+ctrl+"Controller.js";
 
-        const Controller = require(ctrlFile);
-        controller = new Controller();
+    ipcRenderer.on('ctrl:add', function (e, ctrl) {
+      alert("./controller/" + ctrl + "Controller.js");
+      ctrlFile = "./controller/" + ctrl + "Controller.js";
+
+      const Controller = require(ctrlFile);
+      controller = new Controller();
     });
 
-    
-   
+
+
   </script>
 </body>
+
 </html>
