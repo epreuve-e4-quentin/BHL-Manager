@@ -83,14 +83,13 @@ app.on('ready', function () {
 
   ipcMain.on('ctrl:add', function (e, ctrl = "Home", method = "index") {
 
-
     mainContent.webContents.loadURL(url.format({
       pathname: path.join(__dirname, 'index.html'),
       protocol: 'file:',
       slashes: true,
     }));
 
-    mainContent.webContents.session.clearCache(function () { console.log('cleared all cookies '); });
+
 
     mainContent.webContents.on('did-finish-load', () => {
       mainContent.webContents.send('ctrl:add', ctrl, method);
