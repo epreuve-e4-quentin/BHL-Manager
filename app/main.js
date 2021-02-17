@@ -60,15 +60,18 @@ app.on('ready', function () {
     }
   });
   mainWindow.addBrowserView(mainContent);
+  mainContent.webContents.openDevTools({ mode: 'undocked' });
   mainContent.setBounds({ x: 301, y: 0, width: 500, height: 800 });
+
+
+
+
   mainContent.webContents.loadURL(url.format({
     pathname: path.join(__dirname, 'index.html'),
     protocol: 'file:',
     slashes: true,
-
   }));
 
-  mainNav.webContents.openDevTools({ mode: 'undocked' });
 
   mainContent.webContents.on('did-finish-load', () => {
     mainContent.webContents.send('ctrl:add', "Home");
@@ -78,13 +81,8 @@ app.on('ready', function () {
   //-----------------------------------------------
 
 
-  ipcMain.on('ctrl:add', function (e, ctrl) {
+  ipcMain.on('ctrl:add', function (e, ctrl = "Home", method = "index") {
 
-    mainContent = new BrowserView({
-      webPreferences: {
-        nodeIntegration: true
-      }
-    });
 
     mainContent.webContents.loadURL(url.format({
       pathname: path.join(__dirname, 'index.html'),
@@ -95,11 +93,10 @@ app.on('ready', function () {
     mainContent.webContents.session.clearCache(function () { console.log('cleared all cookies '); });
 
     mainContent.webContents.on('did-finish-load', () => {
-      console.log(ctrl);
-      mainContent.webContents.send('ctrl:add', ctrl);
+      mainContent.webContents.send('ctrl:add', ctrl, method);
     });
 
-    console.log(ctrl);
+
 
 
   });

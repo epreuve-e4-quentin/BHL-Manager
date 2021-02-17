@@ -15,13 +15,16 @@
     const { ipcRenderer } = electron;
     const View = require('./view/View.js');
 
-    ipcRenderer.on('ctrl:add', function (e, ctrl) {
-      alert("./controller/" + ctrl + "Controller.js");
+    ipcRenderer.on('ctrl:add', function (e, ctrl = "Home", method = "index") {
+      //alert("./controller/" + ctrl + "Controller.js");
       ctrlFile = "./controller/" + ctrl + "Controller.js";
 
       const Controller = require(ctrlFile);
       controller = new Controller();
+      controller[method]();
     });
+
+
 
 
 

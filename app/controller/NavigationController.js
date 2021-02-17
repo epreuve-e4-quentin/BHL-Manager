@@ -4,6 +4,9 @@ class NavigationController {
    constructor() {
 
 
+   }
+
+   index() {
       this.View = new View("Navigation");
       this.View.setFile("view/navigation.html");
 
@@ -13,9 +16,6 @@ class NavigationController {
 
       //Les fonctionalités de la vue
       this.changeView();
-
-
-
    }
 
    changeView() {
@@ -24,7 +24,7 @@ class NavigationController {
       //Navigation évènement;
       $(document).on("click", "#mainNav ul li", function () {
          //alert($(this).attr("data-ctrl"));
-         ipcRenderer.send('ctrl:add', $(this).attr("data-ctrl"));
+         ipcRenderer.send('ctrl:add', $(this).attr("data-ctrl"), $(this).attr("data-ctrl-method"));
       });
 
    }
