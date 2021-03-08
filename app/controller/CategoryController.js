@@ -1,24 +1,21 @@
-class ClientController {
+class CategoryController {
 
    constructor($view) {
-
+      //this.db = new Database();
    }
 
    index() {
-
-      this.View = new View("ClientList");
+      this.View = new View("CategoryList");
 
       $(this.View.element).load(this.View.file, function () {
-         $(this).find("#zzz").append("<li> HEYY </li>");
+
       });
 
       console.log(this.View.file);
       this.View.appendBody();
-
-
    }
 
 
 }
 
-module.exports = ClientController
+module.exports = CategoryController
