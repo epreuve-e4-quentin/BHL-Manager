@@ -14,8 +14,16 @@
     const electron = require('electron');
     const { ipcRenderer } = electron;
     const View = require('./view/View.js');
+    const Database =  require('./model/Database.js');
+    var database = new Database();
+ 
+    database.getDB();
+    database.execQuery("SELECT * FROM etat", function(grrr){
+      console.log(grrr);
+    });
 
     ipcRenderer.on('ctrl:add', function (e, ctrl = "Home", method = "index") {
+      
       //alert("./controller/" + ctrl + "Controller.js");
       ctrlFile = "./controller/" + ctrl + "Controller.js";
 
@@ -24,8 +32,7 @@
       controller[method]();
     });
 
-
-
+   
 
 
   </script>

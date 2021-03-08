@@ -7,13 +7,15 @@ class NavigationController {
    }
 
    index() {
+     
       this.View = new View("Navigation");
       this.View.setFile("view/navigation.html");
-
+      
       //Ajout de la vue au body du html
       $(this.View.element).load(this.View.file);
       $("body").append(this.View.element);
-
+     
+    
       //Les fonctionalités de la vue
       this.changeView();
    }

@@ -17,10 +17,11 @@
   },
   "homepage": "https://github.com/quentinhoareau/BHL-Manager#readme",
   "dependencies": {
-    "jquery": "^3.5.1"
+    "jquery": "^3.5.1",
+    "mysql": "^2.18.1"
   },
   "devDependencies": {
-    "electron": "^11.0.3"
+    "electron": "^11.3.0"
   },
   "description": ""
 }

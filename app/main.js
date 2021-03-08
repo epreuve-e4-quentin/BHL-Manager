@@ -43,7 +43,7 @@ app.on('ready', function () {
     slashes: true
   }));
 
-  //mainNav.webContents.openDevTools({mode:'undocked'}) ;
+  mainNav.webContents.openDevTools({mode:'undocked'}) ;
 
   mainNav.webContents.on('did-finish-load', () => {
     mainNav.webContents.send('ctrl:add', "Navigation");
@@ -83,12 +83,13 @@ app.on('ready', function () {
 
   ipcMain.on('ctrl:add', function (e, ctrl = "Home", method = "index") {
 
-
+    
     mainContent.webContents.loadURL(url.format({
       pathname: path.join(__dirname, 'index.html'),
       protocol: 'file:',
       slashes: true,
     }));
+
 
     mainContent.webContents.session.clearCache(function () { console.log('cleared all cookies '); });
 
