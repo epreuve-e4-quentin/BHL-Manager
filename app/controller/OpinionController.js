@@ -11,7 +11,7 @@ class OpinionController {
 
       });
 
-      console.log(this.View.file);
+      
       this.View.appendBody();
    }
 

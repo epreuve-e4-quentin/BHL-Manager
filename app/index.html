@@ -17,10 +17,7 @@
     const Database =  require('./model/Database.js');
     var database = new Database();
  
-    database.getDB();
-    database.execQuery("SELECT * FROM etat", function(grrr){
-      console.log(grrr);
-    });
+    
 
     ipcRenderer.on('ctrl:add', function (e, ctrl = "Home", method = "index") {
       

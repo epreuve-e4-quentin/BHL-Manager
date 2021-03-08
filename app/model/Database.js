@@ -27,11 +27,14 @@ class Database{
    }
 
    //Exceute 
-   execQuery(query, callback){
+   execQuery(query, tabValues = null, callback = null){
       
-      var wtf = this.connection.query(query, function(err, rows, fields) {
+      var wtf = this.connection.query(query, tabValues, function(err, rows, fields) {
 
-         callback(rows);
+         if(callback != null){
+            callback(rows);
+         }
+         
 
          if(err){
              console.log("Une erreur est survenue lors de l'exécution de la requête.");
@@ -45,10 +48,10 @@ class Database{
      
       // Close the connection
       
-      // this.connection.end(function(){});
-      // this.connection = null;
+      this.connection.end(function(){});
+      this.connection = null;
 
-      return callback;
+
    }
 
 

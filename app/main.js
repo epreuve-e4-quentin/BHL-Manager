@@ -35,7 +35,7 @@ app.on('ready', function () {
     }
   });
   mainWindow.addBrowserView(mainNav);
-  console.log(mainWindow.getBrowserView());
+  // console.log(mainWindow.getBrowserView());
   mainNav.setBounds({ x: 0, y: 0, width: 300, height: 800 });
   mainNav.webContents.loadURL(url.format({
     pathname: path.join(__dirname, 'index.html'),
@@ -43,7 +43,7 @@ app.on('ready', function () {
     slashes: true
   }));
 
-  mainNav.webContents.openDevTools({mode:'undocked'}) ;
+  // mainNav.webContents.openDevTools({mode:'undocked'}) ;
 
   mainNav.webContents.on('did-finish-load', () => {
     mainNav.webContents.send('ctrl:add', "Navigation");
