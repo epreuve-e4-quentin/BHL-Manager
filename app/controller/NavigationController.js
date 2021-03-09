@@ -27,7 +27,6 @@ class NavigationController {
       $(document).on("click", "#mainNav ul li", function () {
          //alert($(this).attr("data-ctrl"));
          ipcRenderer.send('nav:change', $(this).attr("data-ctrl"), $(this).attr("data-ctrl-method"));
-      
       });
 
    }
