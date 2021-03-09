@@ -14,92 +14,80 @@ let mainContent;
 app.on('ready', function () {
   // Création d'une nouvelle fenêtre
   mainWindow = new BrowserWindow({
-    width: 1200,
-    height: 800,
+    width: 1250,
+    height: 58,
     webPreferences: {
       nodeIntegration: true //Activation des dépendence (jquery/electron)
     }
   });
 
-
-  // Quit app when closed
-  mainWindow.on('closed', function () {
-    app.quit();
-  });
-
-
-  //-------------Navigation------------------
-  mainNav = new BrowserView({
-    webPreferences: {
-      nodeIntegration: true
-    }
-  });
-  mainWindow.addBrowserView(mainNav);
-  // console.log(mainWindow.getBrowserView());
-  mainNav.setBounds({ x: 0, y: 0, width: 300, height: 800 });
-  mainNav.webContents.loadURL(url.format({
+  mainWindow.loadURL(url.format({
     pathname: path.join(__dirname, 'index.html'),
     protocol: 'file:',
     slashes: true
   }));
 
-  // mainNav.webContents.openDevTools({mode:'undocked'}) ;
-
-  mainNav.webContents.on('did-finish-load', () => {
-    mainNav.webContents.send('ctrl:add', "Navigation");
-  })
-  //----------------------------------------
+  //------------
+  navWindow = new BrowserWindow({ frame: false, width: 200, height: 800, webPreferences: { nodeIntegration: true }, parent: mainWindow, show: false });
 
 
-
-
-  //-------------Contenu principal------------------
-  mainContent = new BrowserView({
-    webPreferences: {
-      nodeIntegration: true
-    }
-  });
-  mainWindow.addBrowserView(mainContent);
-  mainContent.webContents.openDevTools({ mode: 'undocked' });
-  mainContent.setBounds({ x: 301, y: 0, width: 500, height: 800 });
-
-
-
-
-  mainContent.webContents.loadURL(url.format({
+  navWindow.loadURL(url.format({
     pathname: path.join(__dirname, 'index.html'),
     protocol: 'file:',
-    slashes: true,
+    slashes: true
   }));
 
-
-  mainContent.webContents.on('did-finish-load', () => {
-    mainContent.webContents.send('ctrl:add', "Home");
+  
+  navWindow.webContents.on('did-finish-load', () => {
+    navWindow.webContents.send('ctrl:add', "Navigation");
   })
 
+
+
+  navWindow.once('ready-to-show', () => {
+    navWindow.show()
+  })
+  var posMain = mainWindow.getPosition();
+  navWindow.setPosition(posMain[0]+10, posMain[1]+60);
+  
+  mainWindow.on('move', function() {
+    let positionMain = mainWindow.getPosition();
+
+    navWindow.setPosition( positionMain[0]+10 , positionMain[1]+60 );
+  });
+  //---------
+
+  //------------
+  contentWindow = new BrowserWindow({ frame: false, width: 1000, height: 800, webPreferences: { nodeIntegration: true }, parent: mainWindow, show: false });
+  contentWindow.loadURL(url.format({
+    pathname: path.join(__dirname, 'index.html'),
+    protocol: 'file:',
+    slashes: true
+  }));
+
+  contentWindow.once('ready-to-show', () => {
+    contentWindow.show()
+  })
+  contentWindow.webContents.openDevTools({mode:'undocked'}) ;
+
+  contentWindow.setPosition(posMain[0]+250, posMain[1]+60);
+  
+  mainWindow.on('move', function() {
+    let positionMain = mainWindow.getPosition();
+
+    contentWindow.setPosition( positionMain[0]+(250) , positionMain[1]+60 );
+  });
+  //---------
+
+  mainWindow.on('closed', function () {
+    app.quit();
+  });
 
   //-----------------------------------------------
 
 
-  ipcMain.on('ctrl:add', function (e, ctrl = "Home", method = "index") {
-
-    
-    mainContent.webContents.loadURL(url.format({
-      pathname: path.join(__dirname, 'index.html'),
-      protocol: 'file:',
-      slashes: true,
-    }));
-
-
-    mainContent.webContents.session.clearCache(function () { console.log('cleared all cookies '); });
-
-    mainContent.webContents.on('did-finish-load', () => {
-      mainContent.webContents.send('ctrl:add', ctrl, method);
-    });
-
-
-
-
+  ipcMain.on('nav:change', function (e, ctrl = "Home", method = "index") {
+    contentWindow.webContents.send('ctrl:add', ctrl, method);
   });
 
 });

@@ -5,7 +5,8 @@ class ClientController {
    }
 
    index() {
-      
+  
+  
       this.View = new View("ClientList");
 
       $(this.View.element).load(this.View.file, function () {

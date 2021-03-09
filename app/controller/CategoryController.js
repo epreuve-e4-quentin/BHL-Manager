@@ -9,7 +9,7 @@ class CategoryController {
    }
 
    index() {
-      
+      alert("categ");
       this.categoryManager.list(function(categList){
          console.log(categList);
       });

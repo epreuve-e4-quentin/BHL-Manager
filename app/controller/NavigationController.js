@@ -7,7 +7,7 @@ class NavigationController {
    }
 
    index() {
-     
+
       this.View = new View("Navigation");
       this.View.setFile("view/navigation.html");
       
@@ -26,7 +26,8 @@ class NavigationController {
       //Navigation évènement;
       $(document).on("click", "#mainNav ul li", function () {
          //alert($(this).attr("data-ctrl"));
-         ipcRenderer.send('ctrl:add', $(this).attr("data-ctrl"), $(this).attr("data-ctrl-method"));
+         ipcRenderer.send('nav:change', $(this).attr("data-ctrl"), $(this).attr("data-ctrl-method"));
+      
       });
 
    }
