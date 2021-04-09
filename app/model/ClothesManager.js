@@ -10,6 +10,14 @@ class ClothesManager{
       },  );
    }
 
+   
+   get(id, callback){
+      this.db.getDB();
+      this.db.execQuery("SELECT * FROM vetement WHERE id=?", [id], function(result){
+         callback(result[0]);
+      });
+   }
+
    insert(nom, prix, motifPosition, codeGenre, description, idCateg){
       this.db.getDB();
       this.db.execQuery("INSERT INTO vetement(nom, prix, motifPosition, codeGenre, description, idCateg) VALUES(?,?,?,?,?,?)", [nom, prix, motifPosition, codeGenre, description, idCateg]);

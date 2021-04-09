@@ -1,4 +1,4 @@
-class ClothesController {
+class ClotheController {
 
    constructor($view) {
       const Manager = require('../model/ClothesManager.js');
@@ -8,7 +8,7 @@ class ClothesController {
    index() {
       // this.ClothesManager.insert("test");
 
-      this.View = new View("ClothesList");
+      this.View = new View("ClotheList");
       var manager = this.ClothesManager;
 
       $(this.View.element).load(this.View.file, function () {
@@ -22,7 +22,7 @@ class ClothesController {
                   + " <td> " + element.id + " </td>"
                   + " <td> " + element.id + " </td>"
                   + " <td> " + element.nom + " </td>"
-                  + " <td> " + "<button class='nav-link' data-ctrl='Clothes' data-ctrl-method='edit'> Modifier </button>" + " </td>"
+                  + " <td> " + "<a href='?ctrl=Clothe&method=edit&param=["+element.id+"]'><button > Modifier </button>" + " </a> </td>"
                   + "</tr>"
                );
             });
@@ -45,7 +45,35 @@ class ClothesController {
 
    }
 
+   edit(id) {
+
+      this.View = new View("ClotheEdit");
+      var clotheManager = this.clotheManager;
+
+      $(this.View.element).load(this.View.file, function () {
+         var view = this;
+
+         clotheManager.get(id ,function (clothe) {
+             $("form#clotheEdit input[name=nom]").val(clothe.nom);
+             $("form#clotheEdit input[name=prix]").val(clothe.prix);
+             $("form#clotheEdit input[name=codeGenre]").val(clothe.codeGenre);
+             $("form#clotheEdit input[name=description]").val(clothe.description);
+             $("form#clotheEdit input[name=idCateg]").val(clothe.idCateg);
+         });
+
+         //Formulaire
+         $('#send_form').on('click',function(){
+            var form = $( "form#clotheEdit" ).serialize();
+            console.log(form);
+            // clotheManager.update(id, form["value"]);
+         });
+
+      });
+      this.View.appendBody();
+
+   }
+
 
 }
 
-module.exports = ClothesController
+module.exports = ClotheController
