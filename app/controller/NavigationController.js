@@ -17,16 +17,17 @@ class NavigationController {
      
     
       //Les fonctionalités de la vue
-      this.changeView();
+      //this.changeView();
    }
 
-   changeView() {
+   changeView(){
       const electron = require('electron');
       const { ipcRenderer } = electron;
       //Navigation évènement;
+      
       $(document).on("click", "#mainNav ul li", function () {
          //alert($(this).attr("data-ctrl"));
-         ipcRenderer.send('nav:change', $(this).attr("data-ctrl"), $(this).attr("data-ctrl-method"));
+         ipcRenderer.send( 'nav:change' , $(this).attr("data-ctrl"), $(this).attr("data-ctrl-method") );
       });
 
    }

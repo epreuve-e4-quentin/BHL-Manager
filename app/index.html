@@ -10,33 +10,56 @@
 
   <link rel="stylesheet" href="public\bootstrap-4.3.1\bootstrap.min.css">
   <link rel="stylesheet" href="public/DataTable/datatable.css">           <!-- Css pour la librerie DataTable -->
-  <script src="public/DataTable/datatable.js"> </script>                  <!-- Script pour la librerie DataTable -->
+  <script src="public/DataTable/datatable.js"></script>                  <!-- Script pour la librerie DataTable -->
 </head>
 
 <body>
 
+  <nav id="mainNav">
+    <ul>
+      <li><button onclick="goBack()">Précédent</button></li>
+       <a href="#"><li class='nav-link' data-ctrl="Home" data-ctrl-method="index"> Home </li> </a>
+       <a href="?ctrl=Client&method=index"><li class='nav-link' data-ctrl="Client" data-ctrl-method="index" > Client Manager </li></a>
+       <!-- <li class='nav-link' data-ctrl="Opinion" data-ctrl-method="index"> Avis Manager </li> -->
+       <a href="?ctrl=Category&method=index"><li class='nav-link'> Catégorie Manager </li></a>
+       <a href="?ctrl=Clothes&method=index"><li class='nav-link'> Vêtements Manager </li> </a>
+    </ul>
+ </nav>
+
+ <div id="mainContent"></div>
+ 
   <script>
 
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    var ctrl, method, param;
+
+    if(urlParams.get('ctrl') != null ){ var ctrl = urlParams.get('ctrl');  }
+    else{ var ctrl = 'Client' ; }
+  
+    if(urlParams.get('method') != null){ var method = urlParams.get('method');}
+    else{ var method = 'index'; }
+
+    if(urlParams.get('param') != null ){ var param = JSON.parse(urlParams.get('param') ); }
+    else{ var param = [] ;}
+
+
     const electron = require('electron');
-    const { ipcRenderer } = electron;
+    const { ipcRenderer } = electron; 
     const View = require('./view/View.js');
     const Database =  require('./model/Database.js');
     var database = new Database();
- 
-    
 
-    ipcRenderer.on('ctrl:add', function (e, ctrl = "Home", method = "index") {
+    ctrlFile = "./controller/" + ctrl + "Controller.js";
+
+    const Controller = require(ctrlFile);
+    controller = new Controller();
+
+    controller[method].apply(controller, param);
   
-      //alert("./controller/" + ctrl + "Controller.js");
-      ctrlFile = "./controller/" + ctrl + "Controller.js";
-
-      const Controller = require(ctrlFile);
-      controller = new Controller();
-      controller[method]();
-    });
-
-   
-
+    function goBack() {
+      window.history.back();
+    }
 
   </script>
 </body>

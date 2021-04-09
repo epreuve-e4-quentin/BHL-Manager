@@ -10,7 +10,7 @@ class View {
    }
 
    appendBody() {
-      $("body").html(this.element);
+      $("body #mainContent").html(this.element);
    }
 
    setFile(file) {

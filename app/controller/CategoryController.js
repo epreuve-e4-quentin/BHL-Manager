@@ -12,12 +12,12 @@ class CategoryController {
       // this.categoryManager.insert("test");
 
       this.View = new View("CategoryList");
-      var manager = this.categoryManager;
+      var categoryManager = this.categoryManager;
 
       $(this.View.element).load(this.View.file, function () {
          var view = this;
       
-         manager.list(function (categList) {
+         categoryManager.list(function (categList) {
 
             categList.forEach(element => {
                $(view).find("#tableCategorie tbody").append(
@@ -25,11 +25,12 @@ class CategoryController {
                   + " <td> " + element.id + " </td>"
                   + " <td> " + element.id + " </td>"
                   + " <td> " + element.nom + " </td>"
-                  + " <td> " + "<button data-ctrl='Category' data-ctrl-method='edit'> Modifier </button>" + " </td>"
+                  + " <td> " + "<a href='?ctrl=Category&method=edit&param=["+element.id+"]'><button > Modifier </button>" + " </a> </td>"
                   + "</tr>"
                );
             });
-               $(document).ready(function () {
+            
+            $(document).ready(function () {
                $(view).find('#tableCategorie').DataTable({
                   dom: 'ftpl',
                   order: [[1, "asc  "]], //Order des dates en premier
@@ -38,27 +39,9 @@ class CategoryController {
                   }
                })
             });
-         
-
-            // $(document).on("click", "#mainNav ul li", function () {
-            //    //alert($(this).attr("data-ctrl"));
-            //    ipcRenderer.send('nav:change', $(this).attr("data-ctrl"), $(this).attr("data-ctrl-method"));
-            // });
 
          });
-       });//.ready(function(){
-      //    //Datatable
-      //       $(document).ready(function () {
-      //          $(view).find('#tableCategorie').DataTable({
-      //             dom: 'ftpl',
-      //             order: [[1, "asc  "]], //Order des dates en premier
-      //             language: {
-      //                url: "public/script/Datatable/french.json"
-      //             }
-      //          })
-      //       });
-      // });
-
+       });
 
 
 
@@ -66,12 +49,26 @@ class CategoryController {
 
    }
 
-   edit() {
-      // this.categoryManager.insert("test");
+   edit(id) {
 
-      this.View = new View("CategoryList");
+      this.View = new View("CategoryEdit");
+      var categoryManager = this.categoryManager;
+
+      console.log(categoryManager.listV2());
 
       $(this.View.element).load(this.View.file, function () {
+         var view = this;
+
+         categoryManager.get(id ,function (categ) {
+             $("form#categoryEdit input[name=nom]").val(categ.nom);
+         });
+
+         //Formulaire
+         $('#send_form').on('click',function(){
+            var form = $( "form#categoryEdit" ).serializeArray()[0];
+            alert();
+            categoryManager.update(id, form["value"]);
+         });
 
       });
       this.View.appendBody();

@@ -15,9 +15,9 @@ app.on('ready', function () {
   // Création d'une nouvelle fenêtre
   mainWindow = new BrowserWindow({
     width: 1250,
-    height: 58,
+    height: 800,
     webPreferences: {
-      nodeIntegration: true //Activation des dépendence (jquery/electron)
+      nodeIntegration: true //Activation des dépendence (JQuery/Electron)
     }
   });
 
@@ -27,56 +27,58 @@ app.on('ready', function () {
     slashes: true
   }));
 
+  mainWindow.webContents.openDevTools({mode:'undocked'}) ;
+
   //------------
-  navWindow = new BrowserWindow({ frame: false, width: 200, height: 800, webPreferences: { nodeIntegration: true }, parent: mainWindow, show: false });
+  // navWindow = new BrowserWindow({ frame: false, width: 200, height: 600, webPreferences: { nodeIntegration: true }, parent: mainWindow, show: false });
 
 
-  navWindow.loadURL(url.format({
-    pathname: path.join(__dirname, 'index.html'),
-    protocol: 'file:',
-    slashes: true
-  }));
+  // navWindow.loadURL(url.format({
+  //   pathname: path.join(__dirname, 'index.html'),
+  //   protocol: 'file:',
+  //   slashes: true
+  // }));
 
+
+  // navWindow.webContents.on('did-finish-load', () => {
+  //   navWindow.webContents.send('ctrl:add', "Navigation");
+  // })
+
+
+
+  // navWindow.once('ready-to-show', () => {
+  //   navWindow.show()
+  // })
+  // var posMain = mainWindow.getPosition();
+  // navWindow.setPosition(posMain[0]+10, posMain[1]+60);
   
-  navWindow.webContents.on('did-finish-load', () => {
-    navWindow.webContents.send('ctrl:add', "Navigation");
-  })
+  // mainWindow.on('move', function() {
+  //   let positionMain = mainWindow.getPosition();
 
-
-
-  navWindow.once('ready-to-show', () => {
-    navWindow.show()
-  })
-  var posMain = mainWindow.getPosition();
-  navWindow.setPosition(posMain[0]+10, posMain[1]+60);
-  
-  mainWindow.on('move', function() {
-    let positionMain = mainWindow.getPosition();
-
-    navWindow.setPosition( positionMain[0]+10 , positionMain[1]+60 );
-  });
+  //   navWindow.setPosition( positionMain[0]+10 , positionMain[1]+60 );
+  // });
   //---------
 
   //------------
-  contentWindow = new BrowserWindow({ frame: false, width: 1000, height: 800, webPreferences: { nodeIntegration: true }, parent: mainWindow, show: false });
-  contentWindow.loadURL(url.format({
-    pathname: path.join(__dirname, 'index.html'),
-    protocol: 'file:',
-    slashes: true
-  }));
+  // contentWindow = new BrowserWindow({ frame: false, width: 1000, height: 600, webPreferences: { nodeIntegration: true }, parent: mainWindow, show: false });
+  // contentWindow.loadURL(url.format({
+  //   pathname: path.join(__dirname, 'index.html'),
+  //   protocol: 'file:',
+  //   slashes: true
+  // }));
 
-  contentWindow.once('ready-to-show', () => {
-    contentWindow.show()
-  })
-  contentWindow.webContents.openDevTools({mode:'undocked'}) ;
+  // contentWindow.once('ready-to-show', () => {
+  //   contentWindow.show()
+  // })
+  // contentWindow.webContents.openDevTools({mode:'undocked'}) ;
 
-  contentWindow.setPosition(posMain[0]+250, posMain[1]+60);
+  // contentWindow.setPosition(posMain[0]+250, posMain[1]+60);
   
-  mainWindow.on('move', function() {
-    let positionMain = mainWindow.getPosition();
+  // mainWindow.on('move', function() {
+  //   let positionMain = mainWindow.getPosition();
 
-    contentWindow.setPosition( positionMain[0]+(250) , positionMain[1]+60 );
-  });
+  //   contentWindow.setPosition( positionMain[0]+(250) , positionMain[1]+60 );
+  // });
   //---------
 
   mainWindow.on('closed', function () {
@@ -86,9 +88,9 @@ app.on('ready', function () {
   //-----------------------------------------------
 
 
-  ipcMain.on('nav:change', function (e, ctrl = "Home", method = "index") {
-    contentWindow.webContents.send('ctrl:add', ctrl, method);
-  });
+  // ipcMain.on('nav:change', function (e, ctrl = "Home", method = "index", param) {
+  //   contentWindow.webContents.send('ctrl:add', ctrl, method, param);
+  // });
 
 });
 
