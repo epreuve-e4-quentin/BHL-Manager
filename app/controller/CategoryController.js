@@ -11,7 +11,7 @@ class CategoryController {
    index() {
       // this.categoryManager.insert("test");
 
-      this.View = new View("CategoryList");
+      this.View = new View("category/index.html");
       var categoryManager = this.categoryManager;
 
       $(this.View.element).load(this.View.file, function () {
@@ -49,9 +49,34 @@ class CategoryController {
 
    }
 
+   add() {
+      this.View = new View("category/add.html");
+      var categoryManager = this.categoryManager;
+
+      console.log(categoryManager.listV2());
+
+      $(this.View.element).load(this.View.file, function () {
+         var view = this;
+
+         categoryManager.get(id ,function (categ) {
+             $("form#categoryAdd input[name=nom]").val(categ.nom);
+         });
+
+         //Formulaire
+         $('#send_form').on('click',function(){
+            var form = serializeForm('categoryAdd') ;
+        
+            categoryManager.add(id, form.nom);
+         });
+
+      });
+      this.View.appendBody();
+
+   }
+
    edit(id) {
 
-      this.View = new View("CategoryEdit");
+      this.View = new View("category/edit.html");
       var categoryManager = this.categoryManager;
 
       console.log(categoryManager.listV2());
@@ -74,6 +99,7 @@ class CategoryController {
       this.View.appendBody();
 
    }
+
 
 
 }

@@ -34,7 +34,6 @@ class CategoryManager{
    update(id,nom){
       this.db.getDB();
       this.db.execQuery("UPDATE categorie SET nom=? WHERE id=?", [nom, id]);
-      
    }
    
 }

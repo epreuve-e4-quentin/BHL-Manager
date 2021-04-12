@@ -4,13 +4,13 @@
 <head>
   <title>BHL Manager</title>
   <script>window.$ = window.jQuery = require('jquery');</script>
-  <script src="public/bootstrap-4.3.1/bootstrap.min.js"></script>     
+  <script src="public/bootstrap-4.3.1/bootstrap.min.js"></script>
   <link rel="stylesheet" href="public/nav.css">
   <link rel="stylesheet" href="public/bhl-manager.css">
 
   <link rel="stylesheet" href="public\bootstrap-4.3.1\bootstrap.min.css">
-  <link rel="stylesheet" href="public/DataTable/datatable.css">           <!-- Css pour la librerie DataTable -->
-  <script src="public/DataTable/datatable.js"></script>                  <!-- Script pour la librerie DataTable -->
+  <link rel="stylesheet" href="public/DataTable/datatable.css"> <!-- Css pour la librerie DataTable -->
+  <script src="public/DataTable/datatable.js"></script> <!-- Script pour la librerie DataTable -->
 </head>
 
 <body>
@@ -18,36 +18,44 @@
   <nav id="mainNav">
     <ul>
       <li><button onclick="goBack()">Précédent</button></li>
-       <a href="#"><li class='nav-link' data-ctrl="Home" data-ctrl-method="index"> Home </li> </a>
-       <a href="?ctrl=Client&method=index"><li class='nav-link' data-ctrl="Client" data-ctrl-method="index" > Client Manager </li></a>
-       <!-- <li class='nav-link' data-ctrl="Opinion" data-ctrl-method="index"> Avis Manager </li> -->
-       <a href="?ctrl=Category&method=index"><li class='nav-link'> Catégorie Manager </li></a>
-       <a href="?ctrl=Clothe&method=index"> <li class='nav-link'> Vêtements Manager </li> </a>
+      <a href="#">
+        <li class='nav-link' data-ctrl="Home" data-ctrl-method="index"> Home </li>
+      </a>
+      <a href="?ctrl=Client&method=index">
+        <li class='nav-link' data-ctrl="Client" data-ctrl-method="index"> Client Manager </li>
+      </a>
+      <!-- <li class='nav-link' data-ctrl="Opinion" data-ctrl-method="index"> Avis Manager </li> -->
+      <a href="?ctrl=Category&method=index">
+        <li class='nav-link'> Catégorie Manager </li>
+      </a>
+      <a href="?ctrl=Clothe&method=index">
+        <li class='nav-link'> Vêtements Manager </li>
+      </a>
     </ul>
- </nav>
+  </nav>
 
- <div id="mainContent"></div>
- 
+  <div id="mainContent"></div>
+
   <script>
 
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     var ctrl, method, param;
 
-    if(urlParams.get('ctrl') != null ){ var ctrl = urlParams.get('ctrl');  }
-    else{ var ctrl = 'Client' ; }
-  
-    if(urlParams.get('method') != null){ var method = urlParams.get('method');}
-    else{ var method = 'index'; }
+    if (urlParams.get('ctrl') != null) { var ctrl = urlParams.get('ctrl'); }
+    else { var ctrl = 'Client'; }
 
-    if(urlParams.get('param') != null ){ var param = JSON.parse(urlParams.get('param') ); }
-    else{ var param = [] ;}
+    if (urlParams.get('method') != null) { var method = urlParams.get('method'); }
+    else { var method = 'index'; }
+
+    if (urlParams.get('param') != null) { var param = JSON.parse(urlParams.get('param')); }
+    else { var param = []; }
 
 
     const electron = require('electron');
-    const { ipcRenderer } = electron; 
+    const { ipcRenderer } = electron;
     const View = require('./view/View.js');
-    const Database =  require('./model/Database.js');
+    const Database = require('./model/Database.js');
     var database = new Database();
 
     ctrlFile = "./controller/" + ctrl + "Controller.js";
@@ -56,9 +64,18 @@
     controller = new Controller();
 
     controller[method].apply(controller, param);
-  
+
     function goBack() {
       window.history.back();
+    }
+
+    function serializeForm(formId) {
+      var formArray = $("form#clotheEdit").serializeArray();
+      var returnArray = {};
+      for (var i = 0; i < formArray.length; i++) {
+        returnArray[formArray[i]['name']] = formArray[i]['value'];
+      }
+      return returnArray;
     }
 
   </script>

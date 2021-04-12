@@ -2,11 +2,9 @@ class View {
 
 
    //Construction de la vue
-   constructor(viewName) {
-      viewName = viewName.charAt(0).toUpperCase() + viewName.slice(1);
-      this.file = 'view/' + viewName + 'View.html';
+   constructor(viewPath) {
+      this.file = 'view/' + viewPath;
       this.element = document.createElement("div");
-
    }
 
    appendBody() {

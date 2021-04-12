@@ -5,7 +5,7 @@ class OpinionController {
    }
 
    index() {
-      this.View = new View("OpinionList");
+      this.View = new View("opinion/index.html");
 
       $(this.View.element).load(this.View.file, function () {
 

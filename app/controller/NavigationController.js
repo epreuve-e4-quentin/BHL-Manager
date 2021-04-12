@@ -8,8 +8,7 @@ class NavigationController {
 
    index() {
 
-      this.View = new View("Navigation");
-      this.View.setFile("view/navigation.html");
+      this.View = new View("view/navigation.html");
       
       //Ajout de la vue au body du html
       $(this.View.element).load(this.View.file);

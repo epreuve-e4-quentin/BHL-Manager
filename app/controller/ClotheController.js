@@ -1,19 +1,25 @@
 class ClotheController {
 
    constructor($view) {
-      const Manager = require('../model/ClothesManager.js');
-      this.ClothesManager = new Manager();
+      const ClotheManager = require('../model/ClothesManager.js');
+      this.ClotheManager = new ClotheManager();
+
+      const CategoryManager = require('../model/CategoryManager.js');
+      this.CategoryManager = new CategoryManager();
+
+      const GenreManager = require('../model/GenreManager.js');
+      this.GenreManager = new GenreManager();
    }
 
    index() {
       // this.ClothesManager.insert("test");
 
-      this.View = new View("ClotheList");
-      var manager = this.ClothesManager;
+      this.View = new View("clothes/index.html");
+      var manager = this.ClotheManager;
 
       $(this.View.element).load(this.View.file, function () {
          var view = this;
-      
+
          manager.list(function (clothesList) {
 
             clothesList.forEach(element => {
@@ -22,11 +28,11 @@ class ClotheController {
                   + " <td> " + element.id + " </td>"
                   + " <td> " + element.id + " </td>"
                   + " <td> " + element.nom + " </td>"
-                  + " <td> " + "<a href='?ctrl=Clothe&method=edit&param=["+element.id+"]'><button > Modifier </button>" + " </a> </td>"
+                  + " <td> " + "<a href='?ctrl=Clothe&method=edit&param=[" + element.id + "]'><button > Modifier </button>" + " </a> </td>"
                   + "</tr>"
                );
             });
-            
+
             $(document).ready(function () {
                $(view).find('#tableClothes').DataTable({
                   dom: 'ftpl',
@@ -37,7 +43,7 @@ class ClotheController {
                })
             });
          });
-       });
+      });
 
 
 
@@ -47,28 +53,52 @@ class ClotheController {
 
    edit(id) {
 
-      this.View = new View("ClothevEdit");
-      var clotheManager = this.clotheManager;
+      this.View = new View("clothes/edit.html");
+      var clotheManager = this.ClotheManager;
+      var CategoryManager = this.CategoryManager;
+      var GenreManager = this.GenreManager;
 
       $(this.View.element).load(this.View.file, function () {
          var view = this;
 
-         clotheManager.get(id ,function (clothe) {
-             $("form#clotheEdit input[name=nom]").val(clothe.nom);
-             $("form#clotheEdit input[name=prix]").val(clothe.prix);
-             $("form#clotheEdit input[name=codeGenre]").val(clothe.codeGenre);
-             $("form#clotheEdit input[name=description]").val(clothe.description);
-             $("form#clotheEdit input[name=idCateg]").val(clothe.idCateg);
+         //Formulaire
+
+
+         //Envoyer le Formulaire
+         $('#send_form').on('click', function () {
+            var form = serializeForm('clotheEdit') ;
+            
+            clotheManager.update(id, form.nom, form.prix, form.codeGenre, form.description, form.idCateg);
+            alert("L'entité à bien été modifé");
          });
 
-         //Formulaire
-         $('#send_form').on('click',function(){
-            var form = $( "form#clotheEdit" ).serialize();
-            console.log(form);
-            // clotheManager.update(id, form["value"]);
+         //Liste des catégories
+         CategoryManager.list(function (categs) {
+            categs.forEach(categ => {
+               $(view).find("#categList").append("<option value='" + categ.id + "'>" + categ.nom + "</option>");
+            });
          });
+
+         //Liste des catégories
+         GenreManager.list(function (genres) {
+            genres.forEach(genre => {
+               $(view).find("#genreList").append("<option value='" + genre.code + "'>" + genre.libelle + "</option>");
+            });
+         });
+
+         clotheManager.get(id, function (clothe) {
+            
+            $(view).find("form#clotheEdit input[name=nom]").val(clothe.nom);
+            $(view).find("form#clotheEdit input[name=prix]").val(clothe.prix);
+            $(view).find("form#clotheEdit select[name=codeGenre]").val(clothe.codeGenre);
+            $(view).find("form#clotheEdit textarea[name=description]").val(clothe.description);
+            $(view).find("form#clotheEdit select[name=idCateg]").val(clothe.idCateg);
+         });
+         
 
       });
+
+
       this.View.appendBody();
 
    }
