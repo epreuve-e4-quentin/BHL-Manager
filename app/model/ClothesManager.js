@@ -9,7 +9,6 @@ class ClothesManager{
          callback(result);
       },  );
    }
-
    
    get(id, callback){
       this.db.getDB();

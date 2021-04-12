@@ -26,7 +26,7 @@ class Database{
       }
    }
 
-   //Exceute 
+   //Exec<ute 
    execQuery(query, tabValues = null, callback = null){
       
       var wtf = this.connection.query(query, tabValues, function(err, rows, fields) {

@@ -47,7 +47,7 @@ class ClotheController {
 
    edit(id) {
 
-      this.View = new View("ClotheEdit");
+      this.View = new View("ClothevEdit");
       var clotheManager = this.clotheManager;
 
       $(this.View.element).load(this.View.file, function () {
