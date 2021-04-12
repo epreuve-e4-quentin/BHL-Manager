@@ -38,7 +38,7 @@ class ClotheController {
                   dom: 'ftpl',
                   order: [[1, "asc  "]], //Order des dates en premier
                   language: {
-                     url: "public/script/Datatable/french.json"
+                     url: "public/Datatable/french.json"
                   }
                })
             });

@@ -5,34 +5,45 @@
   <title>BHL Manager</title>
   <script>window.$ = window.jQuery = require('jquery');</script>
   <script src="public/bootstrap-4.3.1/bootstrap.min.js"></script>
-  <link rel="stylesheet" href="public/nav.css">
+  <link rel="stylesheet" href="public/adminNavigation.css">
   <link rel="stylesheet" href="public/bhl-manager.css">
 
   <link rel="stylesheet" href="public\bootstrap-4.3.1\bootstrap.min.css">
-  <link rel="stylesheet" href="public/DataTable/datatable.css"> <!-- Css pour la librerie DataTable -->
-  <script src="public/DataTable/datatable.js"></script> <!-- Script pour la librerie DataTable -->
+  <script src="public/DataTableV2/datatables.js"></script> <!-- Script pour la librerie DataTable -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
+
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap4.min.css">
 </head>
 
 <body>
 
-  <nav id="mainNav">
-    <ul>
-      <li><button onclick="goBack()">Précédent</button></li>
-      <a href="#">
-        <li class='nav-link' data-ctrl="Home" data-ctrl-method="index"> Home </li>
-      </a>
-      <a href="?ctrl=Client&method=index">
-        <li class='nav-link' data-ctrl="Client" data-ctrl-method="index"> Client Manager </li>
-      </a>
-      <!-- <li class='nav-link' data-ctrl="Opinion" data-ctrl-method="index"> Avis Manager </li> -->
-      <a href="?ctrl=Category&method=index">
-        <li class='nav-link'> Catégorie Manager </li>
-      </a>
-      <a href="?ctrl=Clothe&method=index">
-        <li class='nav-link'> Vêtements Manager </li>
-      </a>
+  <!-- Sidebar -->
+  <!-- Sidebar -->
+  <div id="sidebar-wrapper">
+    <ul id="sidebar_menu" class="sidebar-nav">
+
+      <li class="sidebar-brand"><a id="menu-toggle" href="#">Admin<span id="main_icon"><i id="toggle_icon"
+              class="fa fa-chevron-circle-left"></i></span></a></li>
     </ul>
-  </nav>
+    <ul class="sidebar-nav" id="sidebar">
+      <li><a href="?ctrl=Clothe&method=index"> <span> Gérer les Vêtement </span> <i class="fa fa-cog"></i> </a> </li>
+      <li><a href="?ctrl=Clothe&method=add"> <span class='sub-menu'> Créer un vêtement </span> <i
+            class="fa fa-plus"></i> </a> </li>
+      <li><a href="?ctrl=Category&method=index"> <span> Gérer les catégories </span> <i class="fa fa-cog"></i> </a>
+      </li>
+      <li><a href="?ctrl=Category&method=add"> <span class='sub-menu'> Créer une catégorie </span> <i
+            class="fa fa-plus"></i> </a> </li>
+      <li><a href="?ctrl=Client&method=index"> <span> Gérer les clients </span> <i class="fa fa-cog"></i> </a> </li>
+      <li><a href="?ctrl=Client&method=add"> <span class='sub-menu'> Ajouter un client </span> <i
+            class="fa fa-plus"></i> </a> </li>
+      <li><a href="?ctrl=Comment&method=index"> <span> Gérer les commentaires </span> <i class="fa fa-cog"></i> </a>
+      </li>
+    </ul>
+  </div>
+
+
+
+
 
   <div id="mainContent"></div>
 
