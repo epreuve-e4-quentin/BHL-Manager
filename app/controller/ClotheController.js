@@ -67,7 +67,7 @@ class ClotheController {
 
          //Envoyer le Formulaire
          $('#send_form').on('click', function () {
-            var form = serializeForm('clotheEdit') ;
+            var form = serializeForm( 'clotheEdit' ) ;
             
             clotheManager.update(id, form.nom, form.prix, form.codeGenre, form.description, form.idCateg);
             alert("L'entité à bien été modifé");

@@ -76,25 +76,24 @@ class CategoryController {
 
    }
 
-   add(id) {
+   add() {
 
       this.View = new View("category/add.html");
       var categoryManager = this.categoryManager;
 
-      console.log(categoryManager.listV2());
 
       $(this.View.element).load(this.View.file, function () {
          var view = this;
 
-         categoryManager.get(id ,function (categ) {
-             $("form#categoryEdit input[name=nom]").val(categ.nom);
-         });
-
          //Formulaire
          $('#send_form').on('click',function(){
-            var form = $( "form#categoryEdit" ).serializeArray()[0];
-            alert();
-            categoryManager.insert( form["value"]);
+ 
+            var form = serializeForm('categoryAdd') ;
+            console.log(form.nom);
+            categoryManager.insert( form.nom );
+
+
+            
          });
 
       });
