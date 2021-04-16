@@ -25,7 +25,7 @@ class ClotheController {
             clothesList.forEach(element => {
                $(view).find("#tableClothes tbody").append(
                   "<tr>" +
-                  + " <td> " + element.id + " </td>"
+                  + " <td> </td>"
                   + " <td> " + element.id + " </td>"
                   + " <td> " + element.nom + " </td>"
                   + " <td> " + "<a href='?ctrl=Clothe&method=edit&param=[" + element.id + "]'><button > Modifier </button>" + " </a> </td>"
@@ -35,13 +35,14 @@ class ClotheController {
 
             $(document).ready(function () {
                $(view).find('#tableClothes').DataTable({
-                  dom: 'ftpl',
-                  order: [[1, "asc  "]], //Order des dates en premier
+                  order: [[0, "asc"]], //Order des dates en premier
                   language: {
                      url: "public/Datatable/french.json"
                   }
                })
             });
+
+
          });
       });
 
@@ -94,6 +95,51 @@ class ClotheController {
             $(view).find("form#clotheEdit textarea[name=description]").val(clothe.description);
             $(view).find("form#clotheEdit select[name=idCateg]").val(clothe.idCateg);
          });
+         
+
+      });
+
+
+      this.View.appendBody();
+
+   }
+
+   add() {
+
+      this.View = new View("clothes/add.html");
+      var clotheManager = this.ClotheManager;
+      var CategoryManager = this.CategoryManager;
+      var GenreManager = this.GenreManager;
+
+      $(this.View.element).load(this.View.file, function () {
+         var view = this;
+
+         //Formulaire
+
+
+         //Envoyer le Formulaire
+         $('#send_form').on('click', function () {
+            var form = serializeForm('clotheEdit') ;
+            console.log(form.codeGenre.length)
+            clotheManager.insert(form.nom, form.prix, form.codeGenre, form.description, form.idCateg);
+            alert("L'entité à bien été ajouté");
+         });
+
+         //Liste des catégories
+         CategoryManager.list(function (categs) {
+            categs.forEach(categ => {
+               $(view).find("#categList").append("<option value='" + categ.id + "'>" + categ.nom + "</option>");
+            });
+         });
+
+         //Liste des catégories
+         GenreManager.list(function (genres) {
+            genres.forEach(genre => {
+               $(view).find("#genreList").append("<option value='" + genre.code + "'>" + genre.libelle + "</option>");
+            });
+         });
+
+   
          
 
       });

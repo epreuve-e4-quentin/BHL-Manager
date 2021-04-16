@@ -22,7 +22,7 @@ class CategoryController {
             categList.forEach(element => {
                $(view).find("#tableCategorie tbody").append(
                   "<tr>" +
-                  + " <td> " + element.id + " </td>"
+                  + " <td> </td>"
                   + " <td> " + element.id + " </td>"
                   + " <td> " + element.nom + " </td>"
                   + " <td> " + "<a href='?ctrl=Category&method=edit&param=["+element.id+"]'><button > Modifier </button>" + " </a> </td>"
@@ -32,10 +32,9 @@ class CategoryController {
             
             $(document).ready(function () {
                $(view).find('#tableCategorie').DataTable({
-                  dom: 'ftpl',
-                  order: [[1, "asc  "]], //Order des dates en premier
+                  order: [[0, "asc"]], //Order des dates en premier
                   language: {
-                     url: "public/script/Datatable/french.json"
+                     url: "public/Datatable/french.json"
                   }
                })
             });
@@ -49,30 +48,7 @@ class CategoryController {
 
    }
 
-   add() {
-      this.View = new View("category/add.html");
-      var categoryManager = this.categoryManager;
-
-      console.log(categoryManager.listV2());
-
-      $(this.View.element).load(this.View.file, function () {
-         var view = this;
-
-         categoryManager.get(id ,function (categ) {
-             $("form#categoryAdd input[name=nom]").val(categ.nom);
-         });
-
-         //Formulaire
-         $('#send_form').on('click',function(){
-            var form = serializeForm('categoryAdd') ;
-        
-            categoryManager.add(id, form.nom);
-         });
-
-      });
-      this.View.appendBody();
-
-   }
+ 
 
    edit(id) {
 
@@ -93,6 +69,32 @@ class CategoryController {
             var form = $( "form#categoryEdit" ).serializeArray()[0];
             alert();
             categoryManager.update(id, form["value"]);
+         });
+
+      });
+      this.View.appendBody();
+
+   }
+
+   add(id) {
+
+      this.View = new View("category/add.html");
+      var categoryManager = this.categoryManager;
+
+      console.log(categoryManager.listV2());
+
+      $(this.View.element).load(this.View.file, function () {
+         var view = this;
+
+         categoryManager.get(id ,function (categ) {
+             $("form#categoryEdit input[name=nom]").val(categ.nom);
+         });
+
+         //Formulaire
+         $('#send_form').on('click',function(){
+            var form = $( "form#categoryEdit" ).serializeArray()[0];
+            alert();
+            categoryManager.insert( form["value"]);
          });
 
       });
