@@ -29,5 +29,8 @@ V. LES DIFFERENCES ENTRE JSON ET JAVASCRIPT
 VI. GLOBAL
   Convention d'une nomination de class commence toujours par un majuscule.
   Instancier c'est créer.
+  
+  ils me demandent d'ajouter une page qui liste pour les personnes agés avec un pop up js
+  
    
 
