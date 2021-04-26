@@ -27,6 +27,10 @@ class ClothesManager{
       this.db.execQuery("UPDATE vetement SET nom=?, prix=?, codeGenre=?, description=?, idCateg=? WHERE id = ?", [nom, prix, codeGenre, description, idCateg, id]);
    }
    
+   delete(id){
+      this.db.getDB();
+      this.db.execQuery("DELETE FROM clothes WHERE id = ?", [id]);
+   }
 }
 
 module.exports = ClothesManager

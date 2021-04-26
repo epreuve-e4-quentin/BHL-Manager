@@ -11,6 +11,10 @@ class View {
       $("body #mainContent").html(this.element);
    }
 
+   replaceBody() {
+      $("body").html(this.element);
+   }
+
    setFile(file) {
       this.file = file;
    }

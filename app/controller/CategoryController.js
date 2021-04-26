@@ -9,6 +9,7 @@ class CategoryController {
    }
 
    index() {
+      
       // this.categoryManager.insert("test");
 
       this.View = new View("category/index.html");
@@ -25,7 +26,8 @@ class CategoryController {
                   + " <td> </td>"
                   + " <td> " + element.id + " </td>"
                   + " <td> " + element.nom + " </td>"
-                  + " <td> " + "<a href='?ctrl=Category&method=edit&param=["+element.id+"]'><button > Modifier </button>" + " </a> </td>"
+                  + " <td> " + "<a href='?ctrl=Category&method=edit&param=["+element.id+"]'><button > Modifier </button>" + " </a> "
+                  + "" + "<a href='?ctrl=Category&method=delete&param=["+element.id+"]'><button > Supprimer </button>" + " </a> </td>"
                   + "</tr>"
                );
             });
@@ -49,7 +51,6 @@ class CategoryController {
    }
 
  
-
    edit(id) {
 
       this.View = new View("category/edit.html");
@@ -76,6 +77,14 @@ class CategoryController {
 
    }
 
+   delete(id) {
+      var categoryManager = this.categoryManager;
+      categoryManager.delete(id) ;
+      alert("Entité supprimé");
+      window.location.href = "?ctrl=Category&method=index";
+   }
+
+
    add() {
 
       this.View = new View("category/add.html");
@@ -91,8 +100,6 @@ class CategoryController {
             var form = serializeForm('categoryAdd') ;
             console.log(form.nom);
             categoryManager.insert( form.nom );
-
-
             
          });
 

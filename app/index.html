@@ -52,9 +52,10 @@
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     var ctrl, method, param;
+    var login = true;
 
-    if (urlParams.get('ctrl') != null) { var ctrl = urlParams.get('ctrl'); }
-    else { var ctrl = 'Client'; }
+    if (urlParams.get('ctrl') != null && login) { var ctrl = urlParams.get('ctrl'); }
+    else { var ctrl = 'Security'; }
 
     if (urlParams.get('method') != null) { var method = urlParams.get('method'); }
     else { var method = 'index'; }
@@ -81,7 +82,7 @@
     }
 
     function serializeForm(formId) {
-      var formArray = $("form#clotheEdit").serializeArray();
+      var formArray = $("form#"+formId).serializeArray();
       var returnArray = {};
       for (var i = 0; i < formArray.length; i++) {
         returnArray[formArray[i]['name']] = formArray[i]['value'];
