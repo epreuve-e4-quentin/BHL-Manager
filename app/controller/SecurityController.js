@@ -30,10 +30,13 @@ class SecurityController {
 
             userManager.getNbByNamePasswword(form.username, form.pwd ,function (nb) {
                if(nb >= 1){
-                 
+                  const electron = require('electron');
+                  const { ipcRenderer } = electron;
+                  ipcRenderer.send('security:login:allow', true);
+                  window.location.href = "?ctrl=Clothe&method=index";
                }
                else{
-                  
+                  alert("Identifiant incorrecte") ;
                }
            });
 

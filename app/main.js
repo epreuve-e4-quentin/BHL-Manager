@@ -3,12 +3,15 @@ const electron = require('electron');
 const path = require('path');
 const url = require('url');
 
+
 // Les constante
-const { app, BrowserWindow, BrowserView, ipcMain } = electron;
+const { app, BrowserWindow, ipcMain } = electron;
 
 let mainWindow;
-let mainNav;
-let mainContent;
+
+global.login = {access: false};
+
+
 
 // Lorsque l'app est prête
 app.on('ready', function () {
@@ -27,7 +30,24 @@ app.on('ready', function () {
     slashes: true
   }));
 
-  mainWindow.webContents.openDevTools() ;
+
+  //Connexion / Login
+  ipcMain.on('security:login:allow', function (e, val) {
+    global.login = {access: val};
+  });
+
+  ipcMain.handle('security:login:check', async (event) => {
+    const result = global.login.access;
+    return result
+  })
+
+
+
+ 
+
+
+
+  mainWindow.webContents.openDevTools();
 
   mainWindow.on('closed', function () {
     app.quit();

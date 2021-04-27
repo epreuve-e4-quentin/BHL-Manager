@@ -11,7 +11,8 @@
   <link rel="stylesheet" href="public\bootstrap-4.3.1\bootstrap.min.css">
   <script src="public/DataTableV2/datatables.js"></script> <!-- Script pour la librerie DataTable -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
-  <link rel="stylesheet" href="public/fontawesome/font-awesome.min.css">      <!-- Css pour les icones avec la librerie Fontawesome -->    
+  <link rel="stylesheet" href="public/fontawesome/font-awesome.min.css">
+  <!-- Css pour les icones avec la librerie Fontawesome -->
   <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap4.min.css">
 </head>
 
@@ -42,47 +43,53 @@
   </div>
 
 
-
-
-
   <div id="mainContent"></div>
 
   <script>
+      const { ipcRenderer } = require("electron");
+      const Database = require('./model/Database.js');
+      const View = require('./view/View.js');
 
-    const queryString = window.location.search;
-    const urlParams = new URLSearchParams(queryString);
-    var ctrl, method, param;
-    var login = true;
+     
 
-    if (urlParams.get('ctrl') != null && login) { var ctrl = urlParams.get('ctrl'); }
-    else { var ctrl = 'Security'; }
+    ipcRenderer.invoke('security:login:check').then((loginAccess) => {
 
-    if (urlParams.get('method') != null) { var method = urlParams.get('method'); }
-    else { var method = 'index'; }
+      const electron = require('electron');
+      const queryString = window.location.search;
+      const urlParams = new URLSearchParams(queryString);
+      var ctrl, method, param;
 
-    if (urlParams.get('param') != null) { var param = JSON.parse(urlParams.get('param')); }
-    else { var param = []; }
+      
+      if (urlParams.get('ctrl') != null && loginAccess) { var ctrl = urlParams.get('ctrl'); }
+      else { var ctrl = 'Security'; }
+
+      if (urlParams.get('method') != null) { var method = urlParams.get('method'); }
+      else { var method = 'index'; }
+
+      if (urlParams.get('param') != null) { var param = JSON.parse(urlParams.get('param')); }
+      else { var param = []; }
+
+        
+     
+
+      ctrlFile = "./controller/" + ctrl + "Controller.js";
+
+      const Controller = require(ctrlFile);
+      controller = new Controller();
+
+      controller[method].apply(controller, param);
 
 
-    const electron = require('electron');
-    const { ipcRenderer } = electron;
-    const View = require('./view/View.js');
-    const Database = require('./model/Database.js');
-    var database = new Database();
+    })
 
-    ctrlFile = "./controller/" + ctrl + "Controller.js";
 
-    const Controller = require(ctrlFile);
-    controller = new Controller();
-
-    controller[method].apply(controller, param);
 
     function goBack() {
       window.history.back();
     }
 
     function serializeForm(formId) {
-      var formArray = $("form#"+formId).serializeArray();
+      var formArray = $("form#" + formId).serializeArray();
       var returnArray = {};
       for (var i = 0; i < formArray.length; i++) {
         returnArray[formArray[i]['name']] = formArray[i]['value'];
