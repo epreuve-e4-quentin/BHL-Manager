@@ -56,19 +56,23 @@ class CategoryController {
       this.View = new View("category/edit.html");
       var categoryManager = this.categoryManager;
 
-      console.log(categoryManager.listV2());
 
       $(this.View.element).load(this.View.file, function () {
          var view = this;
 
          categoryManager.get(id ,function (categ) {
              $("form#categoryEdit input[name=nom]").val(categ.nom);
+      
+             $('a#entityDelete').attr("href", "?ctrl=Category&method=delete&param=["+categ.id+"]");
+
+
          });
+
 
          //Formulaire
          $('#send_form').on('click',function(){
             var form = $( "form#categoryEdit" ).serializeArray()[0];
-            alert();
+            alert("Entité modifiée");
             categoryManager.update(id, form["value"]);
          });
 

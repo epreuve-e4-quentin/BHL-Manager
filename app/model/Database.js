@@ -7,7 +7,7 @@ class Database{
          host     : 'localhost',
          user     : 'root',
          password : 'root',
-         database : 'bhl_clothes'
+         database : 'e4-bhl-manager'
       });
 
       
