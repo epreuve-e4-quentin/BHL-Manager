@@ -69,7 +69,7 @@ class ClotheController {
          $('#send_form').on('click', function () {
             var form = serializeForm( 'clotheEdit' ) ;
             
-            clotheManager.update(id, form.nom, form.prix, form.codeGenre, form.description, form.idCateg);
+            clotheManager.update(id, form.nom, form.prix, form.codeGenre, form.description, form.couleur,  form.idCateg, form.idCateg);
             alert("L'entité à bien été modifé");
          });
 
@@ -93,6 +93,7 @@ class ClotheController {
             $(view).find("form#clotheEdit input[name=prix]").val(clothe.prix);
             $(view).find("form#clotheEdit select[name=codeGenre]").val(clothe.codeGenre);
             $(view).find("form#clotheEdit textarea[name=description]").val(clothe.description);
+            $(view).find("form#clotheEdit input[name=couleur]").val(clothe.couleur);
             $(view).find("form#clotheEdit select[name=idCateg]").val(clothe.idCateg);
          });
          
@@ -120,8 +121,7 @@ class ClotheController {
          //Envoyer le Formulaire
          $('#send_form').on('click', function () {
             var form = serializeForm('clotheEdit') ;
-            console.log(form.codeGenre.length)
-            clotheManager.insert(form.nom, form.prix, form.codeGenre, form.description, form.idCateg);
+            clotheManager.insert(form.nom, form.prix, form.codeGenre, form.description, form.couleur,  form.idCateg);
             alert("L'entité à bien été ajouté");
          });
 

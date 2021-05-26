@@ -22,7 +22,7 @@ class UserManager{
       this.db.getDB();
     
       this.db.execQuery("SELECT COUNT(id) 'nbUser' FROM user WHERE username=? AND password =?", [username, pwd], function(result){
- 
+         
          callback(result[0]["nbUser"]);
       });
    }

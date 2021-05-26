@@ -17,14 +17,14 @@ class ClothesManager{
       });
    }
 
-   insert(nom, prix, codeGenre, description, idCateg){
+   insert(nom, prix, codeGenre, description, couleur, idCateg){
       this.db.getDB();
-      this.db.execQuery("INSERT INTO vetement(nom, prix, codeGenre, description, idCateg) VALUES(?,?,?,?,?)", [nom, prix, codeGenre, description, idCateg]);
+      this.db.execQuery("INSERT INTO vetement(nom, prix, codeGenre, description, couleur,  idCateg) VALUES(?,?,?,?,?,?)", [nom, prix, codeGenre, description, couleur, idCateg]);
    }
 
-   update(id, nom, prix, codeGenre, description, idCateg){
+   update(id, nom, prix, codeGenre, description, couleur, idCateg){
       this.db.getDB();
-      this.db.execQuery("UPDATE vetement SET nom=?, prix=?, codeGenre=?, description=?, idCateg=? WHERE id = ?", [nom, prix, codeGenre, description, idCateg, id]);
+      this.db.execQuery("UPDATE vetement SET nom=?, prix=?, codeGenre=?, description=?, couleur=?, idCateg=? WHERE id = ?", [nom, prix, codeGenre, description, couleur, idCateg, id]);
    }
    
    delete(id){

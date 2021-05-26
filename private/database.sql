@@ -5,9 +5,9 @@ SET time_zone = '+00:00';
 SET foreign_key_checks = 0;
 SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
 
-DROP DATABASE IF EXISTS `bhl_clothes`;
-CREATE DATABASE `bhl_clothes` /*!40100 DEFAULT CHARACTER SET utf8 */;
-USE `bhl_clothes`;
+DROP DATABASE IF EXISTS `e4-bhl-manager`;
+CREATE DATABASE `e4-bhl-manager` /*!40100 DEFAULT CHARACTER SET utf8 */;
+USE `e4-bhl-manager`;
 
 DELIMITER ;;
 
