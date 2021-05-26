@@ -41,6 +41,12 @@ app.on('ready', function () {
     return result
   })
 
+   //Connexion / Login
+   ipcMain.on('app:exit', function (e, val) {
+    app.quit();
+  });
+
+
 
 
  

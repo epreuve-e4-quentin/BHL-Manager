@@ -1,5 +1,30 @@
-<form action="" id="loginForm">
-   <input type="text" name="username" placeholder="Nom d'utilisateur" value="Quentin">
-   <input type="password" name="pwd" placeholder="Mot de passe" value="123456">
-   <button type="button" id="send_form">Se connecter</button>
-</form>
+
+
+
+<link rel="stylesheet" href="public/css/security/index.css">
+
+<form action='' id='loginForm' class="form-signin" method="POST">
+   <div class="text-center mb-4">
+     <span id="logo" style="font-size:4rem"> Administration </span>
+     <h1 class="h3 mb-3 font-weight-normal">Se connecter</h1>
+     <p> Veuillez vous connecter à l'espace de gestion du site BHL Clothes.</p>
+   </div>
+
+   <div class="form-label-group">
+     <input type="text" name="username" id="inputUsername" class="form-control" placeholder="Nom d'utilisateur" required autofocus>
+   </div>
+
+   <div class="form-label-group">
+     <input type="password" name="pwd" id="inputPassword" class="form-control" placeholder="Mot de passe" required>
+   </div>
+
+   <button class="btn btn-lg btn-primary btn-block" type="button" id="send_form">Se connecter</button>
+
+   <p class="mt-5 mb-3 text-muted text-center">&copy; 2020-2021 </p>
+ </form>
+
+
+
+
+
+

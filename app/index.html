@@ -39,6 +39,8 @@
             class="fa fa-plus"></i> </a> </li>
       <li><a href="?ctrl=Comment&method=index"> <span> Gérer les comms </span> <i class="fa fa-cog"></i> </a>
       </li>
+      <li><a href="#" onclick="ipcRenderer.send('app:exit');"> <span> Se déconnecter </span> <i class="fa fa-apple"></i> </a>
+
     </ul>
   </div>
 
@@ -50,7 +52,7 @@
       const Database = require('./model/Database.js');
       const View = require('./view/View.js');
 
-     
+      // ipcRenderer.send('app:exit');
 
     ipcRenderer.invoke('security:login:check').then((loginAccess) => {
 
