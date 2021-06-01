@@ -25,7 +25,7 @@ class CommentController {
                    + " <td> " + element.id + " </td>"
                    + " <td> " + element.id + " </td>"
                    + " <td> " + element.commentaire + " </td>"
-                   + " <td> " + "<button class='nav-link' data-ctrl='Comment' data-ctrl-method='edit'> Modifier </button>" + " </td>"
+                   + " <td> " + "<a href='?ctrl=Comment&method=delete&param=["+element.id+"]'><button > Supprimer </button>" + " </a> </td>"
                    + "</tr>"
                 );
              });
@@ -67,17 +67,12 @@ class CommentController {
  
     }
  
-    edit() {
-       // this.commentManager.insert("test");
- 
-       this.View = new View("commment/index.html");
- 
-       $(this.View.element).load(this.View.file, function () {
- 
-       });
-       this.View.appendBody();
- 
-    }
+    delete(id) {
+      var commentManager = this.commentManager;
+      commentManager.delete(id) ;
+      alert("Entité supprimé");
+      window.location.href = "?ctrl=Comment&method=index";
+   }
  
  
  }

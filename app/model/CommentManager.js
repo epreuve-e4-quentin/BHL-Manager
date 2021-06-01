@@ -35,6 +35,11 @@ class CommentManager{
        this.db.getDB();
        this.db.execQuery("UPDATE avis SET nom=? WHERE id=?", [nom, id]);
     }
+
+    delete(id){
+      this.db.getDB();
+      this.db.execQuery("DELETE FROM avis WHERE id = ?", [id]);
+   }
     
  }
  
