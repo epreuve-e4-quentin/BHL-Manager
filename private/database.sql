@@ -11,43 +11,11 @@ USE `e4-bhl-manager`;
 
 DELIMITER ;;
 
-CREATE FUNCTION `calcCmdHT`(`_numCmd` int) RETURNS float
-BEGIN
-          
-        RETURN (SELECT ROUND(sum(ap.qte*v.prix),2) AS 'prixTTC' FROM article_panier ap 
-INNER JOIN vetement v ON v.id = ap.idVet
-WHERE ap.numCmd = _numCmd );
-    END;;
-
-CREATE FUNCTION `calcCmdTTC`(`_numCmd` int) RETURNS float
-BEGIN
-RETURN (
-
-SELECT ROUND(calcCmdHT(cmd.num)+cp.prixLiv,2) AS 'prixTTC' 
-FROM commande cmd
-INNER JOIN client c ON c.id= cmd.idClient
-INNER JOIN code_postal cp ON cp.cp=c.codePostal
-WHERE cmd.num = _numCmd
-
-);
-
-END;;
-
 CREATE FUNCTION `prixTotalArt`(`_idArt` int, `_qte` int) RETURNS float
 BEGIN
   RETURN (SELECT ROUND(_qte*v.prix,2) AS 'prixTotalArt' 
 FROM vetement v
 WHERE v.id = _idArt);
-END;;
-
-CREATE FUNCTION `qte_article`(_numCmd int(11), _idVet int(3), _taille varchar(3), _numClr int(11)) RETURNS int(11)
-BEGIN
-  RETURN (SELECT qte
-  FROM article_panier ap
-  WHERE ap.numCmd = _numCmd 
-  AND ap.idVet = _idVet 
-  AND ap.taille  = _taille 
-  AND ap.numClr = _numClr);
 END;;
 
 CREATE PROCEDURE `activeCompte`(IN `_email` varchar(255), IN `_cle` varchar(255))
@@ -100,79 +68,6 @@ BEGIN
 
 END;;
 
-CREATE PROCEDURE `insert_article`(IN `_numCmd` int(11), IN `_idVet` int(3), IN `_taille` varchar(3), IN `_numClr` int(11), IN `_qte` int)
-BEGIN
-DECLARE newOrdreArr tinyint;
-DECLARE qteArticle int;
-
-SET qteArticle = (SELECT qte_article(_numCmd , _idVet , _taille , _numClr));
-
-SET newOrdreArr = (
-SELECT
-CASE 
-WHEN MAX(ap.ordreArrivee) IS NULL THEN 1
-WHEN MAX(ap.ordreArrivee) = (
-  SELECT ap2.ordreArrivee FROM article_panier ap2
-  WHERE ap2.numCmd = _numCmd 
-  AND ap2.idVet = _idVet 
-  AND ap2.taille  = _taille 
-  AND ap2.numClr = _numClr
-) THEN MAX(ap.ordreArrivee) 
-ELSE MAX(ap.ordreArrivee)+1
-END AS 'newOrdreArr'
-  FROM article_panier ap
-  WHERE ap.numCmd = _numCmd
-  ORDER BY ap.ordreArrivee DESC
- 
-);
-
-   #Article déjà existant
-   IF( qteArticle >= 1) THEN 
-     IF ( qteArticle+_qte > 10) THEN SET _qte = 10-qteArticle; END IF; #Réquilibrage de la quantié au maximum
-
-        UPDATE article_panier SET qte = qteArticle + _qte, ordreArrivee = newOrdreArr
-        WHERE numCmd = _numCmd 
-        AND idVet = _idVet 
-        AND taille  = _taille 
-        AND numClr = _numClr ;
-   ELSE
-      INSERT INTO article_panier VALUES(_numCmd , _idVet , _taille , _numClr, _qte, newOrdreArr) ;
-   END IF;
-
-END;;
-
-CREATE PROCEDURE `payerCommandeViaSolde`(IN `_idClient` int, IN `_numCmd` int)
-BEGIN
-            DECLARE soldeClient float; DECLARE montantCmdTTC float; DECLARE etatCmd float;
-            DECLARE nomCli varchar(200); DECLARE prenomCli varchar(200); DECLARE rueCli varchar(200); DECLARE cpCli varchar(5);
-
-            SET soldeClient = ( SELECT c.solde FROM client c WHERE c.id = _idClient ) ;
-            SET montantCmdTTC = ( SELECT calcCmdTTC(cmd.num) FROM commande cmd WHERE cmd.num = _numCmd AND cmd.idClient = _idClient ) ;
-            SET etatCmd = ( SELECT cmd2.idEtat FROM commande cmd2 WHERE cmd2.num = _numCmd) ;
-
-            IF (etatCmd = 1) THEN
-              IF (soldeClient > montantCmdTTC AND montantCmdTTC IS NOT NULL AND soldeClient IS NOT NULL ) THEN 
-               
-
-                #Récupération des infos Clients
-                 SELECT c.nom, c.prenom, c.rue, c.codePostal
-                 INTO  nomCli, prenomCli, rueCli, cpCli
-                 FROM client c
-                 where c.id = _idClient;
-
-                UPDATE client SET solde = ROUND(soldeClient-montantCmdTTC,2) WHERE id = _idClient ; 
-                INSERT INTO facture VALUES(_numCmd, nomCli, prenomCli, rueCli, cpCli, "Solde", NOW());
-                UPDATE commande SET idEtat = 2 WHERE num = _numCmd ; 
-              ELSE
-                SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'La paiement n\'a pas été effectué';
-              END IF;
-            ELSE
-              SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'La commande a déjà été payé'; 
-            END IF; 
-           
-      
-    END;;
-
 DELIMITER ;
 
 SET NAMES utf8mb4;
@@ -224,12 +119,12 @@ INSERT INTO `avis` (`id`, `idClient`, `idVet`, `commentaire`, `note`, `date`) VA
 
 DROP TABLE IF EXISTS `categorie`;
 CREATE TABLE `categorie` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `nom` varchar(30) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `nom` (`nom`),
   KEY `id` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 
 INSERT INTO `categorie` (`id`, `nom`) VALUES
 (9,	'Chemisiers & Tuniques'),
@@ -751,9 +646,9 @@ CREATE TABLE `vetement` (
   PRIMARY KEY (`id`),
   KEY `numGenre` (`codeGenre`),
   KEY `idCateg` (`idCateg`),
-  CONSTRAINT `vetement_ibfk_2` FOREIGN KEY (`idCateg`) REFERENCES `categorie` (`id`),
-  CONSTRAINT `vetement_ibfk_3` FOREIGN KEY (`codeGenre`) REFERENCES `genre` (`code`)
-) ENGINE=InnoDB AUTO_INCREMENT=54 DEFAULT CHARSET=utf8;
+  CONSTRAINT `vetement_ibfk_3` FOREIGN KEY (`codeGenre`) REFERENCES `genre` (`code`),
+  CONSTRAINT `vetement_ibfk_4` FOREIGN KEY (`idCateg`) REFERENCES `categorie` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=utf8;
 
 INSERT INTO `vetement` (`id`, `nom`, `prix`, `codeGenre`, `description`, `idCateg`, `couleur`) VALUES
 (1,	'Robe D\'Eté Superposée Fleurie Imprimée',	35.5,	'F',	'test',	1,	'aaaa'),
@@ -806,8 +701,7 @@ INSERT INTO `vetement` (`id`, `nom`, `prix`, `codeGenre`, `description`, `idCate
 (48,	'Sweat à Capuche Fourré Teinté Lettre Brodée',	27.99,	'M',	'Sweat à capuche très doux.\r\nMatières: Coton, Polyester',	4,	''),
 (49,	'Pantalon Déchiré Zippé En Denim - Bleu 2xl',	30,	'H',	'Pantalon déchiré type regular. \r\nMatières: Coton, Polyester, Polyuréthane.',	12,	''),
 (50,	'Jean Droit Déchiré Long - Noir Xl',	25,	'H',	'Jean déchiré type regular.\r\nMatières: Coton, Polyester',	3,	''),
-(51,	'Pantalon Crayon Zippé Ange en Denim - Blanc 32',	35,	'H',	'Pantalon crayon type regular.\r\nMatières: Coton, Spandex.',	12,	''),
-(53,	'zzz',	8,	'F',	'zzzz',	9,	'zzzz');
+(51,	'Pantalon Crayon Zippé Ange en Denim - Blanc 32',	35,	'H',	'Pantalon crayon type regular.\r\nMatières: Coton, Spandex.',	12,	'');
 
 DROP TABLE IF EXISTS `vet_taille`;
 CREATE TABLE `vet_taille` (
@@ -974,4 +868,4 @@ INSERT INTO `vet_taille` (`idVet`, `taille`) VALUES
 (45,	'XS'),
 (47,	'XS');
 
--- 2021-05-26 13:39:51
+-- 2021-06-01 22:35:44
