@@ -28,7 +28,8 @@ class ClotheController {
                   + " <td> </td>"
                   + " <td> " + element.id + " </td>"
                   + " <td> " + element.nom + " </td>"
-                  + " <td> " + "<a href='?ctrl=Clothe&method=edit&param=[" + element.id + "]'><button > Modifier </button>" + " </a> </td>"
+                  + " <td> " + "<a href='?ctrl=Clothe&method=edit&param=[" + element.id + "]'><button > Modifier </button>" + " </a> "
+                  + "" + "<a href='?ctrl=Clothe&method=delete&param=["+element.id+"]'><button > Supprimer </button>" + " </a> </td>"
                   + "</tr>"
                );
             });
@@ -147,6 +148,13 @@ class ClotheController {
 
       this.View.appendBody();
 
+   }
+
+   delete(id) {
+      var clotheManager = this.ClotheManager;
+      clotheManager.delete(id) ;
+      alert("Entité supprimé");
+      window.location.href = "?ctrl=Clothe&method=index";
    }
 
 

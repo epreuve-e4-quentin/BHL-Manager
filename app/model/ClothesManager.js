@@ -29,7 +29,7 @@ class ClothesManager{
    
    delete(id){
       this.db.getDB();
-      this.db.execQuery("DELETE FROM clothes WHERE id = ?", [id]);
+      this.db.execQuery("DELETE FROM vetement WHERE id = ?", [id]);
    }
 }
 
