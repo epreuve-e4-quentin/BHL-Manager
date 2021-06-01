@@ -10,14 +10,6 @@ class CategoryManager{
       },  );
    }
 
-   listV2(){
-      this.db.getDB();
-      var hey ;
-      this.db.execQuery("SELECT * FROM categorie", [], function(result){
-         hey = result;
-      });
-      return hey;
-   }
 
    get(id, callback){
       this.db.getDB();

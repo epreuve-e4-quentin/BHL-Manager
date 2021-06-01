@@ -102,7 +102,6 @@ class CategoryController {
          $('#send_form').on('click',function(){
  
             var form = serializeForm('categoryAdd') ;
-            console.log(form.nom);
             categoryManager.insert( form.nom );
             
          });
