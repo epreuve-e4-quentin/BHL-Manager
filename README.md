@@ -12,4 +12,6 @@ _(N'oubliez pas de configurer les identifiants de connexion à la base de donné
 4. Pour finir, diriger vous dans le dossier "/app" et démarer l'application avec la commande "npm start"
     
 # A savoir
-...
+- Identifiants de connexion à l'app:
+  -  Utilisateur : btssio
+  -  Mot de passe : btssio
