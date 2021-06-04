@@ -103,6 +103,8 @@ class CategoryController {
  
             var form = serializeForm('categoryAdd') ;
             categoryManager.insert( form.nom );
+            alert("L'entité à bien été ajouté");
+            window.location.href = "?ctrl=Category&method=index";
             
          });
 

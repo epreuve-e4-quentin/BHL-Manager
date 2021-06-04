@@ -27,7 +27,11 @@
               class="fa fa-user"></i></span></a></li>
     </ul>
     <ul class="sidebar-nav" id="sidebar">
+      <li><a style="background-color: cadetblue;" href="#" onclick="goBack()"> <span>   Retour </span> <i class="fa fa-arrow-circle-left"></i> </a> </li>
+
       <li><a href="?ctrl=Clothe&method=index"> <span> Gérer les Vêtement </span> <i class="fa fa-cog"></i> </a> </li>
+
+
       <li><a href="?ctrl=Clothe&method=add"> <span class='sub-menu'> Créer un vêtement </span> <i
             class="fa fa-plus"></i> </a> </li>
       <li><a href="?ctrl=Category&method=index"> <span> Gérer les catégories </span> <i class="fa fa-cog"></i> </a>
@@ -39,7 +43,7 @@
             class="fa fa-plus"></i> </a> </li>
       <li><a href="?ctrl=Avis&method=index"> <span> Gérer les avis </span> <i class="fa fa-cog"></i> </a>
       </li>
-      <li><a href="#" onclick="ipcRenderer.send('app:exit');"> <span> Se déconnecter </span> <i class="fa fa-apple"></i> </a>
+      <li><a href="#" onclick="ipcRenderer.send('app:exit');"> <span> Se déconnecter </span> <i class="fa fa-power-off"></i> </a>
 
     </ul>
   </div>
