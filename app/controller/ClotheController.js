@@ -124,6 +124,7 @@ class ClotheController {
             var form = serializeForm('clotheEdit') ;
             clotheManager.insert(form.nom, form.prix, form.codeGenre, form.description, form.couleur,  form.idCateg);
             alert("L'entité à bien été ajouté");
+            window.location.href = "?ctrl=Clothe&method=index";
          });
 
          //Liste des catégories

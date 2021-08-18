@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "dist": "electron-builder"
   },
   "repository": {
     "type": "git",
@@ -17,11 +18,24 @@
   },
   "homepage": "https://github.com/quentinhoareau/BHL-Manager#readme",
   "dependencies": {
+  
+  },
+  "devDependencies": {
+    "electron-builder": "^22.10.5",
     "jquery": "^3.5.1",
     "mysql": "^2.18.1"
   },
-  "devDependencies": {
-    "electron": "^11.3.0"
-  },
-  "description": ""
+  "description": "",
+  "build": {
+    "appId": "com.ipenywis.app",
+    "productName": "BHL-Manager-test",
+    "target": "NSIS",
+    "directories": {
+      "output": "build"
+    },
+    "nsis": {
+      "allowToChangeInstallationDirectory": true,
+      "oneClick": false
+    }
+  }
 }
